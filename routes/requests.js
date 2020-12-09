@@ -1,0 +1,126 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+
+const mongoose = require('mongoose');
+const Requests = require('../models/request');
+
+const requestRouter = express.Router();
+const authenticate = require('../authentication');
+const request = require('../models/request');
+
+requestRouter.use(bodyParser.json());
+
+requestRouter.route('/')
+.get((req,res,next)=>{
+    Requests.find(req.query)
+    .populate('user')
+    .populate('helps')
+    .then((requests)=>{
+        res.statusCode = 200;
+        res.setHeader('Content-Type','application/json');
+        res.json(requests);
+    },(err)=>next(err))
+    .catch((err)=>next(err)); 
+})
+.post(authenticate.verifyuser,(req,res,next)=>{
+    Requests.create(req.body)
+    .then((requ)=>{
+        res.statusCode = 200;
+        res.setHeader('Content-Type','application/json');
+        requ.user = req.user._id;
+        requ.save()
+        res.json(requ);
+    }, (err)=>next(err))
+    .catch((err)=>next(err));
+})
+.delete(authenticate.verifyuser,(req,res,next)=>{
+  Requests.find({})
+  .then(requests=>{
+    requests.map(req=>{req.helps.splice(0,req.helps.lenght)});
+    requests.save();
+    res.statusCode = 200;
+    res.setHeader('Content-Type','application/json');
+    res.json(requests);
+  },err=>next(err))
+  .catch(err=>next(err))
+});
+
+requestRouter.route('/myRequests')
+.get(authenticate.verifyuser,authenticate.verifyInNeed,(req,res,next)=>{
+    Requests.find({user:req.user._id})
+    .populate('user')
+    .then((myrequ)=>{
+        res.statusCode = 200;
+        res.setHeader('Content-Type','application/json');
+        res.json(myrequ);
+    },err=>next(err))
+    .catch(err=>next(err));
+})
+
+requestRouter.route('/:requestId')
+.get(authenticate.verifyuser,(req,res,next)=>{
+    Requests.findById(req.params.requestId)
+    .populate('user')
+    .populate('helps')
+    .then((request)=>{
+        res.statusCode = 200;
+        res.setHeader('Content-Type','application/json');
+        res.json(request.loading);
+    },err=>next(err))
+    .catch(err=>next(err))
+})
+.delete(authenticate.verifyuser, (req,res,next)=>{
+    Requests.findByIdAndDelete(req.params.requestId)
+    .then((request)=>{
+        request.save()
+        Requests.find({user:req.user._id})
+        .then((reqe=>{
+            res.statusCode = 200;
+            res.setHeader('Content-Type','application/json');
+            res.json(reqe);
+        }),err=>next(err))
+        .catch(err=>next(err))
+    }, err=>next(err))
+    .catch(err=>next(err))
+})
+
+.put(authenticate.verifyuser,authenticate.verifyHelper,(req,res,next)=>{
+    Requests.findByIdAndUpdate(req.params.requestId,{
+        $set: req.body
+    }, {new:true})
+    .then(update=>{
+        console.log(update)
+        if(update.helps.indexOf(req.user._id)==0)
+        {
+            err = new Error('The user' + req.user._id + 'has already taken this request');
+            err.status = 403;
+            return next(err);
+        }
+        if(update.helps.lenght>0){
+            err = new Error('This request has already been taken');
+            err.status = 403;
+            return next(err);
+        }
+        update.helps.push(req.user._id);
+        update.save();
+        Requests.find({})
+        .then(savedUpdate=>{
+            res.statusCode = 200;
+            res.setHeader('Content-Type','application/json');
+            res.json(savedUpdate);
+        })
+    },err => next(err))
+    .catch(err=>next(err))
+});
+
+
+
+
+
+module.exports = requestRouter;
+
+
+
+
+
+
