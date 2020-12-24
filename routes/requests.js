@@ -111,13 +111,19 @@ requestRouter.route('/:requestId')
             return next(err);
         }
         update.helps.push(req.user._id);
-        update.save();
-        Requests.find({})
-        .then(savedUpdate=>{
-            res.statusCode = 200;
-            res.setHeader('Content-Type','application/json');
-            res.json(savedUpdate);
-        })
+        update.save()
+        .then(saved=>{
+            Requests.find({})
+            .populate('user')
+            .populate('helps')
+            .then(savedUpdate=>{
+                res.statusCode = 200;
+                res.setHeader('Content-Type','application/json');
+                res.json(savedUpdate);
+            },err=>next(err))
+            .catch(err=>next(err));
+        },err=>next(err))
+        .catch(err=>next(err));
     },err => next(err))
     .catch(err=>next(err))
 });
@@ -127,6 +133,7 @@ requestRouter.route('/:requestId/helps')
     Requests.findById(req.params.requestId)
     .then(request=>{
         request.helps.pop();
+        request.loading = false;
         request.save()
         .then(modReq=>{
             Requests.find({})
