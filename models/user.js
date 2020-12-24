@@ -3,24 +3,7 @@ var Schema = mongoose.Schema;
 var passportlocalmongoose = require('passport-local-mongoose');
 
 
-var Detailsshema = new Schema({
-    age:{
-        type:Number,
-        
-    },
-    cardId:{
-        type:String,
-    },
-    city:{
-        type:String,
-    },
-    familySituation:{
-        type:String,
-    }
-},
-{
-    timestamps: true
-});
+
 
 var Userschema = new Schema({
     username:{
@@ -39,7 +22,15 @@ var Userschema = new Schema({
         type:Boolean,
         required:true
     },
-    details:Detailsshema
+    telNumber:{
+        type:String,
+        required:true
+    },
+    mail:{
+        type:String,
+        required:true
+    }
+    
 },
 {
     timestamps: true

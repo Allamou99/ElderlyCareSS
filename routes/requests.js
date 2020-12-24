@@ -25,11 +25,20 @@ requestRouter.route('/')
 .post(authenticate.verifyuser,(req,res,next)=>{
     Requests.create(req.body)
     .then((requ)=>{
-        res.statusCode = 200;
-        res.setHeader('Content-Type','application/json');
         requ.user = req.user._id;
         requ.save()
-        res.json(requ);
+        .then(requests=>{
+            Requests.find({})
+            .populate('user')
+            .then(requests=>{
+                res.statusCode = 200;
+                res.setHeader('Content-Type','application/json');
+                res.json(requests);
+            },err=>next(err))
+            .catch(err=>next(err));
+        },err=>next(err))
+        .catch(err=>next(err))
+       
     }, (err)=>next(err))
     .catch((err)=>next(err));
 })
@@ -113,9 +122,27 @@ requestRouter.route('/:requestId')
     .catch(err=>next(err))
 });
 
-
-
-
+requestRouter.route('/:requestId/helps')
+.delete(authenticate.verifyuser,authenticate.verifyHelper,(req,res,next)=>{
+    Requests.findById(req.params.requestId)
+    .then(request=>{
+        request.helps.pop();
+        request.save()
+        .then(modReq=>{
+            Requests.find({})
+            .populate('user')
+            .populate('helps')
+            .then(requests=>{
+                res.statusCode = 200;
+                res.setHeader('Content-Type','application/json');
+                res.json(requests);
+            },err=>next(err))
+            .catch(err=>next(err))
+        },err=>next(err))
+        .catch(err=>next(err))
+    },err=>next(err))
+    .catch(err=>next(err))
+});
 
 module.exports = requestRouter;
 

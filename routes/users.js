@@ -11,7 +11,7 @@ router.use(bodyParser.json());
 
 router.post('/signup',cors.corsWithOptions,(req,res,next)=>{
   User.register(new User({username:req.body.username,lastname:req.body.lastname,firstname:req.body.firstname,
-    inNeed : req.body.inNeed,details:req.body.details}),
+    inNeed : req.body.inNeed,telNumber:req.body.telNumber, mail:req.body.mail}),
     req.body.password,(err,user)=>{
     if(err){
       res.status = 500;
@@ -79,7 +79,7 @@ router.post('/login',(req,res,next)=>{
     });
   })(req, res, next);
 });
-router.get('/',authenticate.verifyuser,(req,res,next)=>{
+router.get('/',(req,res,next)=>{
   User.find({})
   .then(users=>{
     res.statusCode = 200;

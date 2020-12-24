@@ -21,13 +21,30 @@ feedbackRouter.route('/')
 })
 .post(authentication.verifyuser,(req,res,next)=>{
     Feedback.create(req.body)
-    .then(feedback=>{
-        feedback.user = req.user._id;
-        feedback.inNeed = req.user.inNeed;
-        feedback.save();
+    .then((feedbackk)=>{
+        feedbackk.user = req.user._id;
+        feedbackk.inNeed = req.user.inNeed;
+        feedbackk.save()
+        .then(feedback=>{
+            Feedback.find({})
+            .populate('user')
+            .then(feedbacks=>{
+                res.statusCode = 200;
+                res.setHeader('Content-Type','application/json');
+                res.json(feedbacks);
+            },err=>next(err))
+            .catch(err=>next(err))
+        },err=>next(err))
+        .catch(err=>next(err));
+    }, (err)=>next(err))
+    .catch((err)=>next(err));
+})
+.delete((req,res,next)=>{
+    Feedback.remove({})
+    .then(resu=>{
         res.statusCode = 200;
         res.setHeader('Content-Type','application/json');
-        res.json(feedback);
+        res.json({'message':'All feedback has been deleted'});
     })
 });
 feedbackRouter.route('/:feedbackId')
