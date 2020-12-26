@@ -10,10 +10,13 @@ var usersRouter = require('./routes/users');
 var requestRouter = require('./routes/requests');
 var feedbackRouter = require('./routes/feedbackRoute');
 var cors = require('cors')
-
+//atlas cloud
+const mongo_URI = 'mongodb+srv://projetintegre:azerty123@test.7d6e8.mongodb.net/test?retryWrites=true&w=majority'
 const mongoose = require('mongoose');
+//local
 var url = Config.link;
-const connect = mongoose.connect(url,{useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
+//cloud_connexion
+const connect = mongoose.connect(mongo_URI , {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
 connect.then((db)=>{
   console.log('Connected to the Server');
 }, (err)=>{console.log(err); });
