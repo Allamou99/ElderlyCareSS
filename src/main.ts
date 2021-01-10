@@ -10,3 +10,4 @@ if (environment.production) {
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
+//pk.eyJ1Ijoic291ZmlhbmU5OSIsImEiOiJja2pxOGI0bHEzZTlhMnFvN2hzY2Y3cmpyIn0.MG2-oT7pfvYxtolBF_T1mA

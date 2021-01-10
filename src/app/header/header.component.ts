@@ -3,7 +3,7 @@
 import { Component, OnInit } from '@angular/core';
 import {EtudiantsService} from '../services/etudiants.service';
 import {etudiant} from '../datas/etudiants';
-
+declare const L:any;
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -11,15 +11,11 @@ import {etudiant} from '../datas/etudiants';
 })
 export class HeaderComponent implements OnInit {
 
-  EtudiantM : etudiant[];
-  EtudiantNM : etudiant[];
-
+  
 
   constructor(private etudiantService : EtudiantsService) { }
     ngOnInit() {
-      this.EtudiantM = this.etudiantService.getMajorant();
-      this.EtudiantNM = this.etudiantService.getNonMajorant();
-      console.log(this.EtudiantM);
-      console.log(this.EtudiantNM);
   }
+  
+
 }
