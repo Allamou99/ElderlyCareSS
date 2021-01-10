@@ -1,1 +1,39 @@
-<p>student works!</p>
+<form novalidate [formGroup]="studentForm" (ngSubmit)="onSubmit()" fxLayout="column">
+    <mat-form-field >
+        <input matInput formControlName="firstname" placeholder="First Name" type="text" required>
+        <mat-error *ngIf="studentForm.get('firstname').hasError('required') && studentForm.get('firstname').touched ">First Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field >
+        <input matInput formControlName="lastname" placeholder="Last Name" type="text" required>
+        <mat-error *ngIf="studentForm.get('lastname').hasError('required') && studentForm.get('lastname').touched ">Last Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput formControlName="email" placeholder="Email" type="text" required>
+        <mat-error *ngIf="studentForm.get('email').hasError('required') && studentForm.get('email').touched ">Email is required</mat-error>
+        <mat-error *ngIf="studentForm.get('email').hasError('email')">Email form incorrect</mat-error>
+    </mat-form-field>
+
+    <mat-form-field >
+        <input matInput formControlName="cin" placeholder="CIN Number" type="text" required>
+        <mat-error *ngIf="studentForm.get('cin').hasError('required') && studentForm.get('cin').touched ">Last Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field >
+        <input matInput formControlName="field" placeholder="Filiere" type="text" required>
+        <mat-error *ngIf="studentForm.get('field').hasError('required') && studentForm.get('field').touched ">Filiere is required</mat-error>
+    </mat-form-field>
+
+    <button type="submit" [disabled]="studentForm.invalid"  mat-raised-button color="primary">Submit</button>
+</form>
+
+
+
+<div class="container" *ngFor="let student of Students">
+    <h1>First Name : {{student.firstname}}</h1>
+    <h3>LastName : {{student.lastname}}</h3>
+    <h3>Email : {{student.email}}</h3>
+    <h3>CIN : {{student.cin}}</h3>
+    <h3>Filiere : {{student.field}}</h3>
+</div>
