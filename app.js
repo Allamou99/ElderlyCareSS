@@ -16,7 +16,7 @@ const mongoose = require('mongoose');
 //local
 var url = Config.link;
 //cloud_connexion
-const connect = mongoose.connect(mongo_URI , {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
+const connect = mongoose.connect(url , {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
 connect.then((db)=>{
   console.log('Connected to the Server');
 }, (err)=>{console.log(err); });

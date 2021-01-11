@@ -2,6 +2,17 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 
+var locationSchema = new Schema({
+    long:{
+        type:Number,
+        required:true
+    },
+    lat:{
+        type:Number,
+        required:true
+    }
+})
+
 var requestSchema = new Schema({
     user:{
         type:mongoose.Schema.Types.ObjectId,
@@ -35,6 +46,10 @@ var requestSchema = new Schema({
         type:Boolean,
         required:true
     },
+    location:{
+        type: locationSchema,
+        required:true
+    },
     helps:[
         {
             type:mongoose.Schema.Types.ObjectId,
@@ -45,6 +60,8 @@ var requestSchema = new Schema({
 {
     timestamps: true
 });
+
+
 
 module.exports = mongoose.model('Request', requestSchema);
 

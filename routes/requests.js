@@ -42,16 +42,17 @@ requestRouter.route('/')
     }, (err)=>next(err))
     .catch((err)=>next(err));
 })
+.put(authenticate.verifyuser,(req,res,next)=>{
+
+})
 .delete(authenticate.verifyuser,(req,res,next)=>{
-  Requests.find({})
-  .then(requests=>{
-    requests.map(req=>{req.helps.splice(0,req.helps.lenght)});
-    requests.save();
+  Requests.remove({})
+  .then((resp)=>{
     res.statusCode = 200;
     res.setHeader('Content-Type','application/json');
-    res.json(requests);
-  },err=>next(err))
-  .catch(err=>next(err))
+    res.json(resp);
+}, (err)=>next(err))
+.catch((err)=>next(err));
 });
 
 requestRouter.route('/myRequests')
@@ -93,7 +94,8 @@ requestRouter.route('/:requestId')
     .catch(err=>next(err))
 })
 
-.put(authenticate.verifyuser,authenticate.verifyHelper,(req,res,next)=>{
+.put(authenticate.verifyuser,(req,res,next)=>{
+    if(!req.user.inNeed){
     Requests.findByIdAndUpdate(req.params.requestId,{
         $set: req.body
     }, {new:true})
@@ -126,6 +128,22 @@ requestRouter.route('/:requestId')
         .catch(err=>next(err));
     },err => next(err))
     .catch(err=>next(err))
+    }
+    else{
+        Requests.findByIdAndUpdate(req.params.requestId,{
+            $set: req.body
+        }, {new:true})
+        .then(updatedRequest=>{
+            Requests.find({user:req.user._id})
+            .populate('user')
+            .populate('helps')
+            .then(reqs=>{
+                res.statusCode = 200;
+                res.setHeader('Content-Type','application/json');
+                res.json(reqs);
+            })
+        })
+    }
 });
 
 requestRouter.route('/:requestId/helps')
@@ -152,7 +170,6 @@ requestRouter.route('/:requestId/helps')
 });
 
 module.exports = requestRouter;
-
 
 
 

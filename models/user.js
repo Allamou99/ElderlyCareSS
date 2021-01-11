@@ -36,7 +36,5 @@ var Userschema = new Schema({
     timestamps: true
 });
 
-
-
 Userschema.plugin(passportlocalmongoose);
 module.exports = mongoose.model('User',Userschema);
