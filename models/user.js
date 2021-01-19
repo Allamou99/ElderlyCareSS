@@ -22,6 +22,10 @@ var Userschema = new Schema({
         type:Boolean,
         required:true
     },
+    isDoctor:{
+        type:Boolean,
+        required:true
+    },
     telNumber:{
         type:String,
         required:true

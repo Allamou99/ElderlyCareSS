@@ -11,7 +11,7 @@ router.use(bodyParser.json());
 
 router.post('/signup',cors.corsWithOptions,(req,res,next)=>{
   User.register(new User({username:req.body.username,lastname:req.body.lastname,firstname:req.body.firstname,
-    inNeed : req.body.inNeed,telNumber:req.body.telNumber, mail:req.body.mail}),
+    inNeed : req.body.inNeed,telNumber:req.body.telNumber, mail:req.body.mail , isDoctor:req.body.isDoctor}),
     req.body.password,(err,user)=>{
     if(err){
       res.status = 500;
@@ -88,6 +88,14 @@ router.get('/',(req,res,next)=>{
     console.log(users);
   }, (err)=>next(err))
   .catch(err=>next(err));
+});
+router.delete('/', (req,res,next)=>{
+    User.remove({})
+    .then(response=>{
+      res.statusCode = 200;
+      res.setHeader('Content-Type','application/json');
+      res.json(response);
+    })
 });
 
 router.get('/checkJWTtoken', cors.corsWithOptions, (req, res) => {
