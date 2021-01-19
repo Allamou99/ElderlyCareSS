@@ -180,17 +180,13 @@ requestRouter.route('/:requestId/helps')
 requestRouter.post('/SendMail',authenticate.verifyuser,(req,res,next)=>{
     let user = req.body;
     console.log('Starting the process of sending the mail');
-    SendMail(user)
-        .then(resp=>
-            {
-            res.statusCode = 200;
-            res.setHeader('Content-Type','application/json');
-            res.json({'sent':true}), console.log('Email sent ..'+res)
-            }, err=>next(err))
-        .catch(err=>next(err));
+    SendMail(user, info=>{
+        console.log(`The mail has beed send 😃 and the id is ${info.messageId}`);
+        res.send({'sent':true});
+    })
 });
 
-async function SendMail(user){
+async function SendMail(user, callback){
 try{
     console.log(user);
     const accesToken = await oAuth2Client.getAccessToken();
@@ -213,10 +209,10 @@ try{
         to:"soufianeallamou2021@gmail.com",
         subject:"Request edited",
         html:`<h1>Hi Sir/Miss</h1><br>
-        <h4>The request Has been updated. You can visit our website to check that out.</h4>`,
+        <h4>The request ${user._id} of Mr/Ms ${user.name} Has been updated. You can visit our website to check that out.</h4>`,
     }
     const result = await transporter.sendMail(mailOptions);
-    return result;
+    callback(result);
 }
 catch(err){
     return err;
@@ -240,3 +236,8 @@ module.exports = requestRouter;
 //acces_token : ya29.a0AfH6SMDhXBWYbUmzcGox2xjX5twlKYiN5OXYDYBNjY1zi6VOYkEw8AT4tJXDqqMJIqOcwh52NII5BrL93raC4bcIsnZc6fwNBVBq3Fn9DC1_YOwhAFVcyM_ZKvqOC2Go29s9vcIc14e45auraFNYqcO_4k1P5POWAFaIE9c3ZJM
 
 
+/*  
+res.statusCode = 200;
+            res.setHeader('Content-Type','application/json');
+            res.json({'sent':true}), console.log('Email sent ..'+res)
+*/
