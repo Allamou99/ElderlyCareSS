@@ -50,6 +50,10 @@ var requestSchema = new Schema({
         type: locationSchema,
         required:true
     },
+    city:{
+        type:String,
+        required:true
+    },
     helps:[
         {
             type:mongoose.Schema.Types.ObjectId,
