@@ -1,16 +1,26 @@
+
 <form novalidate [formGroup]="studentForm" (ngSubmit)="onSubmit()" fxLayout="column">
-    <mat-form-field >
+    <div fxLayout="row" fxLayout.lt-sm fxLayoytGap="15px">
+    <mat-form-field fxFlex>
         <input matInput formControlName="firstname" placeholder="First Name" type="text" required>
         <mat-error *ngIf="studentForm.get('firstname').hasError('required') && studentForm.get('firstname').touched ">First Name is required</mat-error>
     </mat-form-field>
 
-    <mat-form-field >
+    <mat-form-field fxFlex>
         <input matInput formControlName="lastname" placeholder="Last Name" type="text" required>
         <mat-error *ngIf="studentForm.get('lastname').hasError('required') && studentForm.get('lastname').touched ">Last Name is required</mat-error>
     </mat-form-field>
 
+    <mat-form-field fxFlex>
+        <input matInput formControlName="moyenne" placeholder="Mark" type="text" required>
+        <mat-error *ngIf="studentForm.get('moyenne').hasError('required') && studentForm.get('moyenne').touched ">Last Name is required</mat-error>
+        <mat-error *ngIf="studentForm.get('moyenne').hasError('pattern')">This field must contain only numbers</mat-error>
+    </mat-form-field>
+    </div>
+
+
     <mat-form-field>
-        <input matInput formControlName="email" placeholder="Email" type="text" required>
+        <input matInput formControlName="email" placeholder="Email" type="text" required >
         <mat-error *ngIf="studentForm.get('email').hasError('required') && studentForm.get('email').touched ">Email is required</mat-error>
         <mat-error *ngIf="studentForm.get('email').hasError('email')">Email form incorrect</mat-error>
     </mat-form-field>
@@ -24,8 +34,9 @@
         <input matInput formControlName="field" placeholder="Filiere" type="text" required>
         <mat-error *ngIf="studentForm.get('field').hasError('required') && studentForm.get('field').touched ">Filiere is required</mat-error>
     </mat-form-field>
-
-    <button type="submit" [disabled]="studentForm.invalid"  mat-raised-button color="primary">Submit</button>
+    <div fxLayoutAlign="center center">
+    <button type="submit" [disabled]="studentForm.invalid"  mat-raised-button color="primary" fxFlex="40%">Submit</button>
+    </div>
 </form>
 
 

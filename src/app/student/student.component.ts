@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {etudiant,ETUDIANTS} from '../datas/etudiants';
+import {EtudiantsService} from '../services/etudiants.service';
+import {Subscription} from 'rxjs';
+
 
 @Component({
   selector: 'app-student',
@@ -9,14 +12,21 @@ import {etudiant,ETUDIANTS} from '../datas/etudiants';
 })
 export class StudentComponent implements OnInit {
 
-  constructor(private fb:FormBuilder) { }
+  constructor(private fb:FormBuilder,
+  private serviceEtudiant : EtudiantsService) { }
   
   studentForm : FormGroup;
-
-  Students : etudiant[] = ETUDIANTS;
+    subscripiton : Subscription;
+  Students : etudiant[];
 
   ngOnInit() {
+    this.subscripiton = this.serviceEtudiant.getEtudiant()
+    .subscribe(etd => this.Students = etd , err=>console.log(err));
     this.createForm();
+  }
+
+  ngOnDestroy(){
+    this.subscripiton.unsubscribe;
   }
 
   createForm(){
@@ -25,7 +35,8 @@ export class StudentComponent implements OnInit {
       lastname:['',Validators.required],
       email:['',[Validators.required, Validators.email]],
       cin:['', Validators.required],
-      field:['',Validators.required]
+      field:['',Validators.required],
+      moyenne:['',[Validators.required, Validators.pattern('^[0-9]*$')]]
     })
   }
   onSubmit(){
