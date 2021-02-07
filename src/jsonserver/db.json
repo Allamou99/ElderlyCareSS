@@ -1,46 +1,80 @@
 {
-    "etudiants": [
-      {
-        "id": 0,
-        "firstname": "Ali",
-        "lastname": "Alaoui",
-        "cin": "48549BE",
-        "email": "Ali99@outlook.fr",
-        "field": "Informatique"
-      },
-      {
-        "id": 1,
-        "firstname": "Hiba",
-        "lastname": "Oudghiri",
-        "cin": "485DJJ83",
-        "email": "Hiba@outlook.fr",
-        "field": "Informatique"
-      },
-      {
-        "id": 2,
-        "firstname": "Saad",
-        "lastname": "Hakimi",
-        "cin": "24949BEKD",
-        "email": "Saad@outlook.fr",
-        "field": "Industriel"
-      },
-      {
-        "firstname": "Soufiane",
-        "lastname": "Allamou",
-        "email": "soufianeallamou99@outlook.fr",
-        "cin": "BE489311",
-        "field": "Info",
-        "moyenne": "16",
-        "id": 3
-      },
-      {
-        "firstname": "Imad",
-        "lastname": "Barraho²",
-        "email": "Imad99@outlook.fr",
-        "cin": "BEJDD322",
-        "field": "Info",
-        "moyenne": "19",
-        "id": 4
-      }
-    ]
-  }
+  "etudiants": [
+    {
+      "id": 0,
+      "firstname": "Ali",
+      "lastname": "Alaoui",
+      "cin": "48549BE",
+      "email": "Ali99@outlook.fr",
+      "field": "Informatique"
+    },
+    {
+      "id": 1,
+      "firstname": "Hiba",
+      "lastname": "Oudghiri",
+      "cin": "485DJJ83",
+      "email": "Hiba@outlook.fr",
+      "field": "Informatique"
+    },
+    {
+      "id": 2,
+      "firstname": "Saad",
+      "lastname": "Hakimi",
+      "cin": "24949BEKD",
+      "email": "Saad@outlook.fr",
+      "field": "Industriel"
+    },
+    {
+      "firstname": "Soufiane",
+      "lastname": "Allamou",
+      "email": "soufianeallamou99@outlook.fr",
+      "cin": "BE489311",
+      "field": "Info",
+      "moyenne": "16",
+      "id": 3
+    },
+    {
+      "firstname": "Imad",
+      "lastname": "Barrahou",
+      "email": "Imad99@outlook.fr",
+      "cin": "BEJDD322",
+      "field": "Info",
+      "moyenne": "19",
+      "id": 4
+    },
+    {
+      "firstname": "Naruto",
+      "lastname": "Uzumaki",
+      "email": "naruto@outlook.fr",
+      "cin": "BEJKD8473",
+      "field": "Ninja",
+      "moyenne": "7",
+      "id": 5
+    },
+    {
+      "firstname": "Sasuke",
+      "lastname": "Uchiha",
+      "email": "sasuke@outlook.fr",
+      "cin": "BEIEKDJ93892",
+      "field": "Ninja",
+      "moyenne": "19",
+      "id": 6
+    },
+    {
+      "firstname": "Minato",
+      "lastname": "Namikaze",
+      "email": "minati@outlook.fr",
+      "cin": "JDJDSDSKI933",
+      "field": "Ninja",
+      "moyenne": "19",
+      "id": 7
+    }
+  ],
+  "enseignants": [
+    {
+      "id": "0",
+      "nom": "kabbaj",
+      "departement": "info"
+    }
+  ]
+}

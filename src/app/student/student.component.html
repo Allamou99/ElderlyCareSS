@@ -48,3 +48,8 @@
     <h3>CIN : {{student.cin}}</h3>
     <h3>Filiere : {{student.field}}</h3>
 </div>
+
+<div *ngIf="!Students">
+    <h3>Loading ...</h3>
+    <mat-spinner></mat-spinner>
+</div>

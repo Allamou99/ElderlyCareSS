@@ -41,7 +41,8 @@ export class StudentComponent implements OnInit {
   }
   onSubmit(){
     console.log(this.studentForm.value);
-    this.Students.push(this.studentForm.value);
+    this.serviceEtudiant.postEtudiant(this.studentForm.value)
+    .subscribe(reponse => this.Students.push(reponse));
     this.studentForm.reset();
   }
 }
