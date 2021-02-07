@@ -1,7 +1,8 @@
   
 import { Injectable } from '@angular/core';
-import {ETUDIANTS, etudiant} from '../datas/etudiants';
+import {ETUDIANTS, etudiant,url} from '../datas/etudiants';
 import {Observable,of} from 'rxjs';
+
 
 
 @Injectable({
@@ -13,4 +14,5 @@ export class EtudiantsService {
   getEtudiant() : Observable<etudiant[]>{
     return of(ETUDIANTS);
   }
+
 }

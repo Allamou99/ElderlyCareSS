@@ -1,41 +1,4 @@
-export interface etudiant {
-    firstname:string,
-    lastname:string,
-    Cin:string,
-    email:string,
-    field:string
-}
-
-
-export const ETUDIANTS : etudiant[] = [
-    {
-        firstname:'Ali',
-        lastname:'Alaoui',
-        Cin:'48549BE',
-        email:'Ali99@outlook.fr',
-        field:'Informatique'
-    },
-    {
-        firstname:'Hiba',
-        lastname:'Oudghiri',
-        Cin:'485DJJ83',
-        email:'Hiba@outlook.fr',
-        field:'Informatique'
-    },
-    {
-        firstname:'Saad',
-        lastname:'Hakimi',
-        Cin:'24949BEKD',
-        email:'Saad@outlook.fr',
-        field:'Industriel'
-    },
-
-];
-
-export const url = "http://localhost:3000/";
-
-
-/*{
+{
     "etudiants": [
       {
         "id": 0,
@@ -80,4 +43,4 @@ export const url = "http://localhost:3000/";
         "id": 4
       }
     ]
-  }*/
+  }

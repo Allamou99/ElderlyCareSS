@@ -44,5 +44,4 @@ export class StudentComponent implements OnInit {
     this.Students.push(this.studentForm.value);
     this.studentForm.reset();
   }
-
 }
